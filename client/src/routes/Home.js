@@ -12,7 +12,7 @@ function Home (){
         <Hero
         cName="hero"
         heroImg={homeImg}
-        title="Welcome to --name--"
+        title="Welcome to CogniCare"
         text="Catch Alzheimer's in Its Track! A platform that monitors your cognitive health"
         buttonText="Start"
         url="/Blalala"

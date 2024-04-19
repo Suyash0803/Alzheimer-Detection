@@ -1,22 +1,22 @@
+/* eslint-disable no-unused-vars */
 import { config as dotenvConfig} from 'dotenv';
-import { AssemblyAI } from 'assemblyai'
+import express from 'express';
+import cors from 'cors';
+import audioRoutes from './routes/uploads.routes.js';
 
-dotenvConfig()
+dotenvConfig();
 
-const client = new AssemblyAI({
-  apiKey: process.env.ASSEMBLYAI_KEY
-})
+const app = express();
+const port = process.env.PORT || 5000;
 
-const audioUrl =
-  './audios/test102.mp3'
+app.use(cors());
+app.use(express.json());
 
-const audioConfig = {
-  audio_url: audioUrl
-}
+async function connectDB() {}
 
-const run = async () => {
-  const transcript = await client.transcripts.create(audioConfig)
-  console.log(transcript.text)
-}
+// mount routes
+audioRoutes(app)
 
-// run()
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

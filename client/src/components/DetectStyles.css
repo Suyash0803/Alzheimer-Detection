@@ -1,0 +1,32 @@
+.assess-container{
+    margin: 4rem 6rem;
+    text-align: center;
+}
+
+.assess-img{
+    width: min-content;
+}
+
+.assess-container h1{
+    padding: 1rem;
+}
+
+.assess-container p{
+    padding-bottom: 2rem;
+}
+
+.recording-container{
+    margin: auto;
+    text-align: left;
+}
+
+.test {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+@media screen and (max-width: 850px){
+    .assess-container{
+        margin: 4rem 2rem;    
+    }
+}
