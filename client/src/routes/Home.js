@@ -15,7 +15,7 @@ function Home (){
         title="Welcome to CogniCare"
         text="Catch Alzheimer's in Its Track! A platform that monitors your cognitive health"
         buttonText="Start"
-        url="/Blalala"
+        url="/assessment"
         btnClass="show"
         />
         <Introduction/>
