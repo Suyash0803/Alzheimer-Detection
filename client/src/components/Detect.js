@@ -13,9 +13,13 @@ function Detect() {
                 </div>
                 <div className="recording-container">
                     <h3>1. Look at the image</h3>
-                    <p>
-                        2. Hit 'Start' button before you start speaking.
-                    </p>
+                    <ul>
+                        <li>
+                            2. Hit 'Start' button before you start speaking.
+                        </li>
+                        <li>
+                            3. Describe what you see.</li>
+                    </ul>
                     <Recorder />
                 </div>
             </div>

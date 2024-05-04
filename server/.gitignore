@@ -8,6 +8,8 @@
 # uploaded audios
 /uploads
 
+!/cache/example_transcript.json
+
 # testing
 /coverage
 
