@@ -17,6 +17,8 @@ function saveAudio(req, res) {
     try {
         const { path } = req.file;
         const newpath = `uploads/${req.file.originalname}`
+        console.log(path)
+        console.log(newpath)
         fs.renameSync(path, newpath);
         generateTranscripts(newpath);
         

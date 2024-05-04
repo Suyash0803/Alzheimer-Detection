@@ -1,58 +1,23 @@
 {
-    "id": "69886e4a-7008-4c45-8156-676c66a59df9",
+    "id": "2d4a9d8b-c3ae-4733-a831-766475471963",
     "language_model": "assemblyai_default",
     "acoustic_model": "assemblyai_default",
     "language_code": "en_us",
     "status": "completed",
-    "audio_url": "https://cdn.assemblyai.com/upload/7a4d44b1-a25b-47e7-98a3-48b86c30ade8",
-    "text": "English is not my first language.",
+    "audio_url": "https://cdn.assemblyai.com/upload/cfbcf3db-b7cc-4f6e-82dd-0a2f93fd7645",
+    "text": "Hello.",
     "words": [
         {
-            "start": 400,
-            "end": 872,
-            "text": "English",
-            "confidence": 0.99956,
-            "speaker": null
-        },
-        {
-            "start": 910,
-            "end": 1294,
-            "text": "is",
-            "confidence": 0.99959,
-            "speaker": null
-        },
-        {
-            "start": 1374,
-            "end": 1710,
-            "text": "not",
-            "confidence": 0.99953,
-            "speaker": null
-        },
-        {
-            "start": 1782,
-            "end": 2038,
-            "text": "my",
-            "confidence": 0.99985,
-            "speaker": null
-        },
-        {
-            "start": 2086,
-            "end": 2534,
-            "text": "first",
-            "confidence": 1,
-            "speaker": null
-        },
-        {
-            "start": 2654,
-            "end": 3054,
-            "text": "language.",
-            "confidence": 0.4136,
+            "start": 2000,
+            "end": 2200,
+            "text": "Hello.",
+            "confidence": 0.6092,
             "speaker": null
         }
     ],
     "utterances": null,
-    "confidence": 0.902021666666667,
-    "audio_duration": 4,
+    "confidence": 0.6092,
+    "audio_duration": 9,
     "punctuate": true,
     "format_text": true,
     "dual_channel": null,

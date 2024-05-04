@@ -10,7 +10,6 @@ function Demo() {
       <h1>How It Works?</h1>
       <p>Take this simple test to track your cognitive health</p>
       <div className="Democard">
-        {/* <h2>Hi</h2> */}
         <DemoData
           image={Demo1}
           heading="1. Record"
