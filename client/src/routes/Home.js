@@ -1,7 +1,6 @@
 import Hero from "../components/Hero";
 import NavBar from "../components/NavBar"
 import homeImg from "../assets/image.png"
-import Introduction from "../components/Introduction";
 import Footer from "../components/Footer";
 
 function Home (){
