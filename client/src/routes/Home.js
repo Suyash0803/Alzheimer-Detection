@@ -17,7 +17,7 @@ function Home (){
         url="/assessment"
         btnClass="show"
         />
-        <Introduction/>
+        {/* <Introduction/> */}
         <Footer/>
         </>
     )
