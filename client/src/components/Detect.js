@@ -1,5 +1,5 @@
 import "./DetectStyles.css";
-import AudioRecorder from "./AudioRecorder";
+import Recorder from "./Recorder";
 import cookieTheft from "../assets/assessment-images/cookietheft.png"
 
 
@@ -20,7 +20,7 @@ function Detect() {
                         <li>
                             3. Describe what you see.</li>
                     </ul>
-                    <AudioRecorder />
+                    <Recorder />
                 </div>
             </div>
         </div>
