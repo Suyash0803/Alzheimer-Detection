@@ -1,22 +1,25 @@
 import MicRecorder from "mic-recorder-to-mp3"
 import { useEffect, useState, useRef } from "react"
+import { useNavigate } from "react-router-dom"
 import { ReactMic } from "react-mic"
 import AudioTimer from "./AudioTimer"
 import axios from "axios"
 import './RecorderStyles.css'
 
 const PORT = process.env.REACT_APP_PORT;
+const ASSEMBLY_API_KEY = process.env.REACT_APP_ASSEMBLYAI_KEY;
 
 // Set AssemblyAI Axios Header
 const assembly = axios.create({
     baseURL: "https://api.assemblyai.com/v2",
     headers: {
-        authorization: process.env.REACT_APP_ASSEMBLYAI_KEY,
+        authorization: ASSEMBLY_API_KEY,
         "content-type": "application/json",
     },
 })
 
 const App = () => {
+    const navigate = useNavigate()
     const recorder = useRef(null) //Recorder
     const audioPlayer = useRef(null) //Ref for the HTML Audio
     const [elapsedTime, setElapsedTime] = useState(0)
@@ -82,14 +85,21 @@ const App = () => {
 
                 checkStatusHandler()
                 // direct api to trigger model here
-                // const formData = new FormData();
-                // formData.append('transcript', transcriptData);
-                // const response = await axios.post(`http://localhost:${PORT}/api/sdfgyuio`, formData, {
-                //   headers: {
-                //     'Content-Type': 'multipart/form-data'
-                //   }
-                // });
-                console.log('Transcript saved successfully:', transcriptData);
+                const requestData = {
+                    "data": JSON.stringify(transcriptData),
+                }
+                const response = await axios.post(`http://localhost:${PORT}/predict`, requestData, {
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                })
+                console.log('Transcript sent successfully:', transcriptData);
+                const result = response.data
+                
+                if(result) {
+                    console.log(result)
+                    navigate('/result', { state: { result: result } })
+                }
             })
             .catch((err) => console.error(err))
     }
