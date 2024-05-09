@@ -4,6 +4,7 @@ import Home from './routes/Home';
 import About from './routes/About';
 import Contact from './routes/Contact';
 import Assessment from './routes/Assessment';
+import Result from './routes/Result';
 
 export default function App(){
   return (
@@ -13,6 +14,7 @@ export default function App(){
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/assessment" element={<Assessment/>}/>
+        <Route path="/result" element={<Result/>}/>
       </Routes>
     </div>
   );
