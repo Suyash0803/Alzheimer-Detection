@@ -25,7 +25,7 @@ const App = () => {
     const [elapsedTime, setElapsedTime] = useState(0)
     const [blobURL, setBlobUrl] = useState(null)
     const [audioFile, setAudioFile] = useState(null)
-    const [isRecording, setIsRecording] = useState(null)
+    const [isRecording, setIsRecording] = useState(false)
 
     useEffect(() => {
         recorder.current = new MicRecorder({ bitRate: 128 })
@@ -33,6 +33,9 @@ const App = () => {
 
     const startRecording = () => {
         setElapsedTime(0)
+        setTranscript(null)
+        setTranscriptData(null)
+        setTranscriptID(null)
         recorder.current.start().then(() => {
             setIsRecording(true)
         })
@@ -56,7 +59,6 @@ const App = () => {
     }
 
     // AssemblyAI API
-
     // State variables
     const [uploadURL, setUploadURL] = useState("")
     const [transcriptID, setTranscriptID] = useState("")
@@ -74,6 +76,20 @@ const App = () => {
         }
     }, [audioFile])
 
+    // Periodically check the status of the Transcript
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (transcriptData.status !== "completed" && isLoading) {
+                checkStatusHandler()
+            } else {
+                setIsLoading(false)
+                setTranscript(transcriptData.text)
+                clearInterval(interval)
+            }
+        }, 5000)
+        return () => clearInterval(interval)
+    }, [transcriptID, transcriptData])
+
     // Submit the Upload URL to AssemblyAI and retrieve the Transcript ID
     const submitTranscriptionHandler = () => {
         assembly
@@ -84,52 +100,50 @@ const App = () => {
                 setTranscriptID(res.data.id)
 
                 checkStatusHandler()
-                // direct api to trigger model here
-                const requestData = {
-                    "data": JSON.stringify(transcriptData),
-                }
+                console.log('Transcript generated successfully:', transcriptData);
+            }).then(async () => {
+                predictHandler()
+            })
+            .catch((err) => console.error(err))
+    }
+
+    const predictHandler = async () => {
+        if(transcriptData.status === "completed" && transcript) {
+            setTranscript(transcriptData.text)
+            const requestData = {
+                "data": JSON.stringify(transcript),
+            }
+            console.log("api req: ", requestData)
                 const response = await axios.post(`http://localhost:${PORT}/predict`, requestData, {
-                  headers: {
+                headers: {
                     'Content-Type': 'application/json'
-                  }
+                }
                 })
-                console.log('Transcript sent successfully:', transcriptData);
                 const result = response.data
-                
                 if(result) {
                     console.log(result)
                     navigate('/result', { state: { result: result } })
                 }
-            })
-            .catch((err) => console.error(err))
+        } else if(transcript === "") {
+            window.alert('Input is empty, Please try recording again before submitting')
+            setIsLoading(false)
+            setAudioFile(null)
+        }
     }
 
     // Check the status of the Transcript
     const checkStatusHandler = async () => {
         setIsLoading(true)
         try {
-            await assembly.get(`/transcript/${transcriptID}`).then((res) => {
+            await assembly.get(`/transcript/${transcriptID}`).then(async (res) => {
+                await new Promise(resolve => setInterval(resolve, 5000));
                 setTranscriptData(res.data)
+                console.log("from checkstatushandler, ", transcriptData)
             })
         } catch (err) {
             console.error(err)
         }
     }
-
-    // Periodically check the status of the Transcript
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (transcriptData.status !== "completed" && isLoading) {
-                checkStatusHandler()
-            } else {
-                setIsLoading(false)
-                setTranscript(transcriptData.text)
-
-                clearInterval(interval)
-            }
-        }, 1000)
-        return () => clearInterval(interval)
-    },)
 
     return (
         <div className="recorder-container">
@@ -141,7 +155,7 @@ const App = () => {
                 className="sound-wave"
                 strokeColor="#000000"
             />
-            {audioFile && <audio ref={audioPlayer} src={blobURL} controls='controls' />}
+            {(audioFile && !transcript) && <audio ref={audioPlayer} src={blobURL} controls='controls' className="audio-element"/>}
 
             {!isRecording ?
                 <div className="button-container">
@@ -155,14 +169,14 @@ const App = () => {
                         STOP
                     </button>
                 </div>}
+            {isLoading ?
             <div className="button-container">
-                <button onClick={submitTranscriptionHandler} className="start-button">SUBMIT</button>
+                <button className="start-button">Processing...</button>
             </div>
-            {transcriptData.status === "completed" ? (
-                <p>{transcript}</p>
-            ) : (
-                <p>{transcriptData.status}</p>
-            )}
+                : <div className="button-container">
+                <button onClick={submitTranscriptionHandler} className="start-button">SUBMIT</button>
+            </div>}
+            {transcriptData.status === "completed" && <p>{transcript}</p>}
         </div>
     )
 }
