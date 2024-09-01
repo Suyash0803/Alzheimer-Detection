@@ -43,7 +43,7 @@ def pos_text_complete(text):
   return pos_complete(tagged_dialogue(text))
 
 
-with open(r'backend\vectorizer.pkl', 'rb') as f:
+with open(r"C:/Users/DELL/strapiC/Alzheimer-Detection-1/Alzheimer-Detection/backend/vectorizer.pkl", 'rb') as f:
     vec = dill.load(f)
 
 
